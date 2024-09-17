@@ -1,74 +1,123 @@
-/* General styles */
+/* General Styles */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Verdana', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f7f6;
+    background-color: #fdf6e3;
     color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
+    background-color: #5e5b4c8f;
+    color: #edf2f4;
     text-align: center;
+    height: 5%;
+
 }
 
-header h1 {
-    font-size: 2.5rem;
-    margin: 0;
+header h2 {
+    font-size: 2rem;
 }
 
 header p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    margin-top: 5px;
 }
 
-main {
-    max-width: 800px;
-    margin: 20px auto;
+/* Container for topics and content */
+.container {
+    display: flex;
+    flex-grow: 1;
+    max-width: 1200px;
+    margin: 30px auto;
     padding: 20px;
     background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+}
+
+/* Sidebar styles */
+aside#topics {
+    width: 250px;
+    background-color: #F5F5F5;
+    color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-right: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+aside#topics h3 {
+    margin-top: 0;
+}
+
+aside#topics ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+aside#topics ul li {
+    margin: 15px 0;
+    font-size: 1rem;
+}
+
+aside#topics ul li:hover {
+    cursor: pointer;
+    color:  #5e5b4cf4;
+}
+
+/* Main content styles */
+main {
+    flex-grow: 1;
 }
 
 section {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
-h2 {
-    font-size: 1.8rem;
-    color: #0c63e4;
+h3, h4 {
+    color: #968b4f;
+}
+
+p, ul {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #2b2d42;
 }
 
 ul {
     padding-left: 20px;
-    list-style-type: disc;
 }
 
 pre {
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-left: 4px solid #0c63e4;
+    background-color: #edf2f4;
+    padding: 15px;
+    border-left: 4px solid #938541f4;
     overflow-x: auto;
+    border-radius: 6px;
 }
 
+/* Footer Styles */
 footer {
-    background-color: #333;
-    color: #fff;
+    background-color: #5e5b4c8e;
+    color: #edf2f4;
     text-align: center;
-    padding: 10px 0;
-    margin-top: 20px;
+    padding: 20px;
+    margin-top: auto;
 }
 
 footer p {
     margin: 0;
 }
 
-/* Add some button styles for fun */
+/* Link styles */
 a {
     text-decoration: none;
-    color: #0c63e4;
+    color: #716c54;
+    font-weight: bold;
 }
 
 a:hover {
