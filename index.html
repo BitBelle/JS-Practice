@@ -1,59 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>JavaScript Learning Journey</title>
 </head>
-
 <body>
     <header>
-        <h1>JavaScript Practice Hub</h1>
+        <h2>JavaScript Practice Hub</h2>
         <p>Documenting my journey as I learn JavaScript!</p>
     </header>
 
-    <main>
-        <!-- Introduction Section -->
-        <section id="introduction">
-            <h2>Introduction to JavaScript</h2>
-            <p>
-                JavaScript, often abbreviated as JS, is a versatile and widely-used programming language primarily for web development.
-                Its official name is ECMAScript, but it's commonly known as JavaScript due to its origins. JavaScript was originally
-                called LiveScript but was renamed for marketing reasons, leveraging the popularity of Java at the time.
-            </p>
-        </section>
-
-        <!-- Interesting Bits Section -->
-        <section id="interesting-bits">
-            <h2>Interesting Facts about JavaScript</h2>
+    <div class="container">
+        <aside id="topics">
+            <h3>Topics</h3>
             <ul>
-                <li><strong>Scripting Language:</strong> JavaScript executes code at runtime, making it dynamic and flexible.</li>
-                <li><strong>Client-side Language:</strong> JS runs in web browsers, interacting with servers to fetch and display information on webpages.</li>
+                <li>Introduction to JavaScript</li>
+                <li>Variables: Primitive and Reference</li>
+                <li>Data Types</li>
+                <li>Operators</li>
             </ul>
-        </section>
+        </aside>
 
-        <!-- Variables Section -->
-        <section id="variables">
-            <h2>Understanding JavaScript Variables</h2>
-            <p>
-                A variable in JavaScript is like a container that stores values. We can declare variables using <code>let</code>,
-                <code>const</code>, or <code>var</code>. Each has its own scope and rules. Here's a simple explanation:
-            </p>
+        <main>
+            <!-- Introduction Section -->
+            <section id="introduction">
+                <h3>Introduction to JavaScript</h3>
+                <p>JavaScript, often abbreviated as JS, is a versatile and widely-used programming language for web development. From simple interactions to full-fledged applications, JavaScript brings web pages to life!</p>
+            </section>
 
-            <ul>
-                <li><strong>let:</strong> A variable declared with <code>let</code> is limited to the block in which it's defined (block-scoped).</li>
-                <li><strong>const:</strong> Variables declared with <code>const</code> are block-scoped and can't be reassigned after initialization.</li>
-                <li><strong>var:</strong> The older way of declaring variables, <code>var</code> is function-scoped and can lead to unexpected results due to its hoisting behavior.</li>
-            </ul>
+            <!-- Why JavaScript? -->
+            <section id="why-js">
+                <h3>Why JavaScript?</h3>
+                <p>JavaScript is the backbone of interactive web pages. It allows developers to create dynamic content, enhance user interfaces, and build everything from small-scale websites to massive applications.</p>
+                <ul>
+                    <li>It’s supported by all major browsers.</li>
+                    <li>JavaScript powers 97% of all websites!</li>
+                    <li>It integrates easily with HTML and CSS.</li>
+                </ul>
+            </section>
 
-            <h3>Example: Understanding Scoping with <code>let</code></h3>
-            <p>
-                Here's an example of how <code>let</code> works in terms of scoping:
-            </p>
+            <!-- Interesting Bits Section -->
+            <section id="interesting-bits">
+                <h3>Interesting Facts about JavaScript</h3>
+                <ul>
+                    <li><strong>Scripting Language:</strong> JavaScript executes code at runtime, making it dynamic and flexible.</li>
+                    <li><strong>Client-side Language:</strong> JS runs in web browsers, interacting with servers to fetch and display information on webpages.</li>
+                </ul>
+            </section>
 
-            <pre>
+            <!-- JavaScript Basics Section -->
+            <section id="basics">
+                <h3>JavaScript Basics</h3>
+                <h4>Variables</h4>
+                <p>A variable is a container for storing data. You can declare variables using <code>let</code>, <code>const</code>, or <code>var</code>:</p>
+                <ul>
+                    <li><strong>let:</strong> Block-scoped variable that can be updated but not re-declared.</li>
+                    <li><strong>const:</strong> Block-scoped constant that cannot be updated or re-declared.</li>
+                    <li><strong>var:</strong> Function-scoped and hoisted, the old way of declaring variables.</li>
+                </ul>
+
+                <h4>Data Types</h4>
+                <p>JavaScript has two main types of data: primitives and objects.</p>
+                <ul>
+                    <li><strong>Primitive Types:</strong> Numbers, Strings, Booleans, Null, Undefined, Symbol, BigInt.</li>
+                    <li><strong>Objects:</strong> Complex data types that can hold many values.</li>
+                </ul>
+            </section>
+
+            <!-- Example Section -->
+            <section id="examples">
+                <h3>Example: Understanding Scoping with <code>let</code></h3>
+                <pre>
 function letScoping() {
     let a = 10;
 
@@ -64,29 +83,26 @@ function letScoping() {
 
     console.log("Outside if block: " + a); // Output: 10
 }
-
 letScoping();
-            </pre>
-            <p>In the above code, the variable <code>a</code> inside the <code>if</code> block is a separate variable from the one outside due to block-scoping.</p>
-        </section>
+                </pre>
+                <p>The variable <code>a</code> inside the <code>if</code> block is separate due to block-scoping.</p>
+            </section>
 
-        <!-- Learning Resources Section -->
-        <section id="resources">
-            <h2>Learning Resources</h2>
-            <p>Here are some of the resources I'm using to learn JavaScript:</p>
-            <ul>
-                <li><a href="https://www.youtube.com" target="_blank">JavaScript Tutorials on YouTube</a></li>
-                <li><a href="https://eloquentjavascript.net/" target="_blank">Eloquent JavaScript (Book)</a></li>
-                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">MDN Web Docs (Official JavaScript Documentation)</a></li>
-            </ul>
-        </section>
-    </main>
+            <!-- Learning Resources Section -->
+            <section id="resources">
+                <h3>Learning Resources</h3>
+                <p>Here are some of the resources I'm using to learn JavaScript:</p>
+                <ul>
+                    <li><a href="https://www.youtube.com/@NetNinja" target="_blank">JavaScript Tutorials on YouTube</a></li>
+                    <li><a href="https://eloquentjavascript.net/" target="_blank">Eloquent JavaScript (Book)</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">MDN Web Docs (Official JavaScript Documentation)</a></li>
+                </ul>
+            </section>
+        </main>
+    </div>
 
     <footer>
-        <p>Happy Coding! | JavaScript Learning Journey © 2024</p>
+        <p>Happy Coding! | Mercy's JavaScript Learning Journey © 2024</p>
     </footer>
-
-    <script src="script2.js"></script>
 </body>
-
 </html>
