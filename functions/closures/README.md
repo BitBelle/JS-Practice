@@ -65,7 +65,10 @@ In executing this we can call the result function:
  result()
  ```
 
-This is now what happens, a new variable b is created, then in the next line we have variable a which we are also accessing. So here is where closure comes in. Since we are trying to access a variable thats not in our current scope. What closure does once our outer function was being executed closure preserved that chain scope so now what it does is simply remembering that there was a variable *a* that was created and initialized with 20. So now the addition exection gets done and the result is logged to the console.
+This is now what happens;
+
+ A new variable b is created, then in the next line we have variable *a* which we are also accessing. So here is where closure comes in. Since we are trying to access a variable thats not in our current scope. 
+ What closure does is, when our outer function was being executed closure preserved that chain scope so now what it does is simply remembering that there was a variable *a* that was created and initialized with 20. So now the addition exection gets done and the result is logged to the console.
 
 
 
