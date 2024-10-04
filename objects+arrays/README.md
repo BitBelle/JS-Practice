@@ -87,7 +87,7 @@ console.log(x) //value of x doesnt get affected
 ```
 
 
-**# Arrays in JavaScript**
+**## Arrays in JavaScript**
 An array is an object used to store multiple values in a single variable.
 
 ***Arrays can be created in 3 ways;***
