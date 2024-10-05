@@ -2,7 +2,7 @@
 
 An *Object* is a collection of properties where each property has a key-value pair.
 
-*Objects are passed by reference*, meaning, when assigning an object to a variable we copying the reference(memory address) to the object, and not the object itself
+*Objects are passed by reference*, meaning, when assigning an object to a variable we are copying the reference(memory address) to the object, and not the object itself
 
 ***Objects can be defined in 3 different ways:***
     a. Using object literalls - the key-value pairs inside curly braces
@@ -38,14 +38,14 @@ obj1.course = "IT";
 obj1.age = 20;
 ```
 
-Object Properties - are named values
-Accessing properties - can be done in 2 ways;
+*Object Properties* - are named values
+*Accessing properties* - can be done in 2 ways;
     a. dot notation eg. obj1.name
     b. block-brackets eg obj1["name"]
 
-Object Methods - Are actions that can be performed on objects
+*Object Methods* - Are actions that can be performed on objects
 
-Objects are mutable - The properties can be changed even after the object has been created.
+*Objects are mutable* - The properties can be changed even after the object has been created.
 
 Example:
 ```javascript
@@ -223,4 +223,93 @@ fruits.sort();
 console.log(fruits);
 ```
 
+12. reduce() - combines all elements in an array into a single value. It works by applying a function to an accumulator and each element in the array, one by one.
+
+eg.
+```javascript
+let numbers = [1, 2, 3, 4, 5];
+
+// Using reduce to sum the numbers
+let sum = numbers.reduce(function(accumulator, currentValue) {
+  return accumulator + currentValue;
+}, 0);
+
+console.log(sum); // 15
+```
+
+11. includes() - checks if the array contains a certain element. It returns *true* if element is found and *false* if not. (its case sensitive)
+
+`array.includes(element)`
+
+*array* - array we are checking
+*element* - value we are checking for
+
+```javascript
+let fruits = ["apple", "banana", "mango"];
+
+console.log(fruits.includes("banana")); // true
+console.log(fruits.includes("orange")); // false
+```
+
 ## Iterating Over Arrays
+
+1. for loop
+
+```javascript
+for (let i =0; i<fruits.length; i++>){
+    console.log(fruits[i]);
+}
+```
+
+2. forEach() - Executes a provided function once for each array element.
+
+```javascript
+fruits.forEach(fruit => {
+    console.log(fruit);
+})
+```
+
+3. map() - Creates a new array by applying a function to each element of the original array. The original array remains unchanged.
+
+```javascript
+let upperFruits = fruits.map(fruit => fruit.toUpperCase());
+console.log(upperFruits);
+```
+*When to use `map()`:*
+When transforming each element of an array.
+When you need a new array where each element is based on some transformation
+
+4. filter() - Creates a new array by keeping only the elements from the original array that a pass a certain condition(the condition defined in the function provided)
+
+```javascript
+let shortFruits = fruits.filter(fruit => fruit.length <= 5);
+console.log(shortFruits); 
+```
+
+## Destructuring Arrays
+
+This is unpacking/extracting values from arrays into variables.
+
+```javascript
+let [first, second] = ["apple", "banana", "mango", "grapes"]
+console.log(first);
+console.log(second);
+```
+
+Unpacking the 1st and 2nd elements into the first and second variables - mango and grapes are ignored since no variable shave been assigned to them.
+
+*Destructuring in function parameters*
+
+```javascript
+function printFruits([first, second]) {
+    console.log(first);
+    console.log(second);
+}
+
+printFruits(["apple", "banana", "mango"])
+```
+
+## Rest Operator
+
+
+
