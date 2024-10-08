@@ -12,13 +12,26 @@ let randomNumber = Math.floor((Math.random() * 100) + 1)
 
 let guess = Number(prompt("Welcome to Number Guessing game!\nGuess the random number!"))
 
-
-if (guess > randomNumber){
-    alert("Oops! The number guessed id too high. Try Again!")
-} else if(guess < randomNumber){
-    alert("Oops! The number guessed is too low")
-} else if (guess === randomNumber){
-    alert("Yayy! You got it right")
-} else {
-    alert("Please enter a valid number!")
+// validating if a guess is valid before the entering the guessing loop
+ while( guess === "" || isNaN(guess)){
+    guess = Number(prompt("Invalid input!\nMake another guess!"))
 }
+
+while(guess !== randomNumber){
+
+    if (guess > randomNumber){
+        guess = Number(prompt("Oops! The number guessed is too high. Try Again!"))
+    } else if(guess < randomNumber){
+        guess = Number(prompt("Oops! The number guessed is too low. Try Again"))
+    }
+
+    // validating each guess within the loop
+    while(guess === "" || isNaN(guess)) {
+        guess = Number(prompt("Invalid input!\nMake another guess!"))
+    }
+
+}
+
+// if the guess is correct
+alert("Yayy! You got it right");
+
