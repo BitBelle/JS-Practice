@@ -310,6 +310,51 @@ printFruits(["apple", "banana", "mango"])
 ```
 
 ## Rest Operator
+Gathers multiple values into an array/object
 
+Often used in: 
+*Function arguments* - to gather multiple arguments/ handle unknown number of elements
+*Array Destructuring* - to gather remaining elements of an array
 
+Example 1: Rest Operator in Functions
+```javascript
+function sum(...numbers){
+    let total = 0;
 
+    for (let number of numbers){
+        total += number
+    }
+
+    return total
+}
+
+console.log(sum(5, 10, 15));
+console.log(sum(1,2,3,4,5,6,7,8,9));
+```
+
+Example 2: Rest Operator in Array Destructuring
+```javascript
+let fruits = ["apple", "banana", "mango", "orange", "grape"]
+
+let [first, second, ...rest] = fruits;
+
+console.log(first); //"apple"
+console.log(second); //"banana"
+console.log(rest); //["mango", "orange", "grape"]
+```
+
+Example 3: Rest Operator in Objects
+```javascript
+let user = {
+  name: "Alice",
+  age: 25,
+  country: "Kenya",
+  occupation: "Developer"
+};
+
+let { name, ...details } = user;
+
+console.log(name);    // "Alice"
+console.log(details); // { age: 25, country: "Kenya", occupation: "Developer" }
+
+```
