@@ -388,6 +388,7 @@ const averagePrice = availablePrices.reduce((total, price) => total + price, 0) 
 products.filter(product => product.available).length;
 
 console.log(averagePrice);
+// Output: 700
 
 ```
 
@@ -406,6 +407,7 @@ console.log(averagePriceOfAvailableProducts);
 ```
 
 **Example 2: Loop alternative**
+
 Using the traditional loop (without using `filter`, `map` and `reduce`)
 
 ```javascript
@@ -420,7 +422,6 @@ for (let product of products){
 }
 
 const averagePriceLoop = totalPrice / count;
-
 console.log(averagePriceLoop);
 
 ```
