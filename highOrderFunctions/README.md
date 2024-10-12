@@ -1,6 +1,6 @@
 # High-Order Functions
 
-### Abstraction
+## Abstraction
 
 Process of simplifying complex operations by focusing on the essential features and hiding unnecessary details.
 
@@ -24,7 +24,7 @@ Abstraction here: The process of multiplying by 2 is simplified into a reusable 
 
 Abstraction allows us to express higher-level ideas by wrapping detailed operations in functions, reducing repetitive code and making it more understandable and maintainable.
 
-### Abstracting Repetition
+## Abstracting Repetition
 
 Its the process of generalizing repeated actions (like loops) by creating reusable functions that can handle different tasks.
 
@@ -70,8 +70,8 @@ It promotes reusability and clarity by separating the "what needs to be done" fr
 ## High Order Functions
 
 This is a function that either:
-*    1. Takes another function as an arguement(like passing a value)*
-*    2. Returns a new function*
+*  Takes another function as an arguement(like passing a value)
+*  Returns a new function
 
 High-order functions let us abstract over actions, not just values. Thus, we can write code that is flexible, reusable, and more powerful because we can pass in custom behaviors or return new ones.
 
@@ -92,7 +92,7 @@ console.log(add(2, 3));  // Outputs: 5
 
 With high-order functions we can also abstract over actions. Meaning that the function can now deal with values like numbers or strings and actions (functions) that desxribe what to do.
 
-Example: Filtering out even numbers
+**Example: Filtering out even numbers**
 
 ```javascript
 function filterEvenNumbers(numbers){
@@ -114,7 +114,7 @@ But now what if we want to filter out numbers that are greater than 3?
 
 Well, instead of writing a new function for every different action(like filtering even numbers or filtering greater than 3), we can create a high order function that abstracts over the action we want to perform on the array.
 
-Example: Rewriting the function using high-order abstraction
+**Example: Rewriting the function using high-order abstraction**
 
 ```javascript
 function filterArray(numbers, action){
@@ -146,7 +146,8 @@ They are useful for:
 
 
 #### 1. Creating new Functions
-Example: Creating new functions using HoF
+
+**Example: Creating new functions using HoF**
 
 ```javascript
 function greaterThan(n){
@@ -161,7 +162,8 @@ console.log(greaterThan10(11)); //outputs true
 ```
 
 #### 2. Modifying other functions
-Example: Modifying a function by adding extra behavior
+
+**Example: Modifying a function by adding extra behavior**
 
 ```javascript
 function noisy(f) {
@@ -194,6 +196,237 @@ noisy(Math.min)(3, 2, 1)
 
 #### 3. Providing new Control Flow
 
+HOFs can be used to implement control structures, which is like defining new ways for how code should be executed based on certain conditions. It makes it easier to manage complex logic without hardcoding if-else statements everywhere.
+
+**Example:**
+```javascript
+function unless(test, then){
+    if (!test) then()
+
+}
+
+repeat(3, n => {
+    unless(n % 2 === 1, () => {
+        console.log(n, "is even");
+    })
+})
+
+```
+In the above example: 
+   * `unless(test, then)` - runs the then action only if the test condition is false.
+   * `repeat(n, action)` - A function that executes a given action n times. It repeats a check for even numbers 3 times (for 0, 1, and 2).
 
 
+#### 4. Built-in `forEach` and Similar iteration Functions
 
+JS comes with built-in high-order functions like `forEach`, `map`, `filter` and `reduce`, which allows 
+one to work with arrays in a more functional way. These functions abstract the logic for looping and applying actions to each element.
+
+**Example:**
+
+```javascript
+["A", "B", "C"].forEach(letter => console.log(letter));
+```
+
+## Filtering Arrays
+
+*Filtering* means going through an array and keeping only the items that match a certain condition or test.
+
+**Example: Finding red fruits in a list of various fruits**
+
+```javascript
+let fruits = [
+  { name: "Apple", color: "red" },
+  { name: "Banana", color: "yellow" },
+  { name: "Cherry", color: "red" },
+  { name: "Grapes", color: "purple" },
+  { name: "Lemon", color: "yellow" }
+];
+
+// filter function
+function filter(array, test){
+    let passed = [];
+
+    for (let element of array){
+        // check if fruit passes the test(is red)
+        if (test(element)){
+            // if yes add it to passed[]
+            passed.push(element)
+        }
+    }
+
+    //returning the red fruits
+    return passed;
+}
+
+const redFruits = filter(fruits, fruit => fruit.color === "red" );
+console.log(redFruits);
+
+// using the built-in filter method
+const redFruits2 = fruits.filter(fruit => fruit.color === "red")
+console.log(redFruits2);
+
+```
+
+## Transforming with `map`
+
+`map` method in JavaScript, transforms an array by applying a function to each of its elements. 
+The function takes in an element, changes it in some way, and then returns a new array with these changed elements.
+
+**Example: Creating an array that contains only student names**
+```javascript
+let students = [
+  { name: "Alice", grade: 85 },
+  { name: "Bob", grade: 92 },
+  { name: "Charlie", grade: 78 },
+  { name: "David", grade: 90 }
+];
+
+// writing the map function
+function map(array, transform){
+    // array to hold transformed students
+    let mapped = [];
+
+    // looping through each student in the array
+    for (let element of array){
+        // applying the transformation and adding the student to the new array
+        mapped.push(transform(element));
+    }
+
+    // returnin the transformed elements
+    return mapped;
+}
+
+let studentNames = map(students, student => student.name)
+console.log(studentNames);
+
+// using the built-in map method
+let studentNames2 = students.map(student2 => student2.name)
+console.log(studentNames2);
+
+```
+
+## Summarizing with `reduce`
+
+`reduce` method in JavaScript helps to combine all the elements of an array into a single value. 
+Its like taking a bunch of values and "summarize" them into one.
+
+Its super useful when getting, sum of numbers, finding the maximum, calculating a total, or doing anything 
+that involves combining values in some way.
+
+**How reduce works:**
+
+1. Start with a value (like 0 for summing).
+2. Go through each element in the array.
+3. Combine the current value with the next element of the array using a combining function.
+4. Return the final result after all elements are combined.
+
+**Example 1: Summing Sales of a Store**
+```javascript
+let sales = [100, 250, 75, 200, 150];
+
+//reduce function to sum-up
+function reduce(array, combine, start){
+    // starting with an initial value
+    let current = start;
+
+    // lopping through each element
+    for (let element of array) {
+        // combine current value with element
+        current = combine(current, element);
+    }
+
+    //return the final value
+    return current;
+
+}
+
+let totalSales = reduce(sales, (a, b) => a + b, 0);
+console.log(totalSales)
+
+// using the built-in reduce method
+let totalSales2 = sales.reduce((a, b) => a + b, 0);
+console.log(totalSales2);
+
+```
+
+**Example 2: Finding the Maximum Sale**
+```javascript
+let maxSale = sales.reduce((max, sale) => (sale > max ? sale : max), 0) 
+
+```
+
+## Composability
+
+Composability is the idea of comining simple, reusable functions to perform more complex tasks. 
+Instead of writing long, complex code in one go, we can break it down into smaller steps and compose these steps together.
+
+In JS, we can use high-order functions like `filter`, `map` and `reduce` to achieve composability. 
+These functions make code cleaner and easier to understand by breaking down complex tasks into smaller, manageable operations.
+
+**Example 1: Finding the average price of available products**
+
+```javascript
+const products = [
+  { name: "Laptop", price: 1200, available: true },
+  { name: "Phone", price: 800, available: false },
+  { name: "Tablet", price: 600, available: true },
+  { name: "Monitor", price: 300, available: true },
+  { name: "Headphones", price: 150, available: false }
+];
+
+// filtering available products
+const availableProducts = products.filter(product => product.available);
+console.log(availableProducts);
+
+// using map to create an array of only prices of the available product
+const availablePrices = availableProducts.map(product => product.price);
+console.log(availablePrices);
+
+//using reduce to sum up the prices and divide by no. of available products to get average price
+const averagePrice = availablePrices.reduce((total, price) => total + price, 0) /
+products.filter(product => product.available).length;
+
+console.log(averagePrice);
+
+```
+
+**Combining all three steps using composability:**
+
+```javascript
+const averagePriceOfAvailableProducts = products
+  .filter(product => product.available)  // Step 1: Filter
+  .map(product => product.price)         // Step 2: Map prices
+  .reduce((total, price) => total + price, 0) / 
+  products.filter(product => product.available).length; // Step 3: Reduce to average
+
+console.log(averagePriceOfAvailableProducts);
+// Output: 700
+
+```
+
+**Example 2: Loop alternative**
+Using the traditional loop (without using `filter`, `map` and `reduce`)
+
+```javascript
+let totalPrice = 0;
+let count = 0;
+
+for (let product of products){
+    if (product.available){
+        totalPrice += product.price;
+        count++
+    }
+}
+
+const averagePriceLoop = totalPrice / count;
+
+console.log(averagePriceLoop);
+
+```
+
+**Importance of using Composability**
+
+1. Readable - With `filter`, `map`, and `reduce`, the intent of the code is very clear—you filter the products, map the prices, and reduce them to an average.
+2. Reusable - Each function (`filter`, `map`, and `reduce`) is doing one thing, making it easy to reuse parts of the logic.
+3. Scalable -  If you want to add more logic (e.g., finding the most expensive product), you can do it easily by adding another composed function.
