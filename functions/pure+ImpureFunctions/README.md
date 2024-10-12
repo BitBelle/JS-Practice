@@ -3,13 +3,14 @@
 This are operations that produce the same output for the same input. Meaning they return the same results when you pass the same arguements.
 
 Pure functions are:
+
     1. Readable - 
 
     2. Reusable -  Since they don’t depend on or modify external state, pure functions can be reused more easily in different contexts.
 
     3. Predictable - Because their output is only determined by their input, they are easier to reason about and debug.
 
-    Testable - They can be tested independently without needing to set up external states.
+    4. Testable - They can be tested independently without needing to set up external states.
 
 
 ## **Impure Functions**
