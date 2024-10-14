@@ -90,7 +90,7 @@ console.log(add(2, 3));  // Outputs: 5
 
 ***What it means abstracting over actions:***
 
-With high-order functions we can also abstract over actions. Meaning that the function can now deal with values like numbers or strings and actions (functions) that desxribe what to do.
+With high-order functions we can also abstract over actions. Meaning that the function can now deal with values like numbers or strings and actions (functions) that describe what to do.
 
 **Example: Filtering out even numbers**
 
