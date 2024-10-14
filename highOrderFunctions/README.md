@@ -60,7 +60,7 @@ It promotes reusability and clarity by separating the "what needs to be done" fr
 
 ### Key take-aways in both Abstraction and Abstracting repetition:
 
-1. Abstraction (in general) helps you simplify complex operations into reusable, high-level functions.
+1. Abstraction (in general) helps simplify complex operations into reusable, high-level functions.
 
 2. Abstracting repetition allows you to handle repeated tasks (like loops) more flexibly by passing the repeated action as a function.
 
