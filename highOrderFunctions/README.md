@@ -358,7 +358,7 @@ let maxSale = sales.reduce((max, sale) => (sale > max ? sale : max), 0)
 
 ## Composability
 
-Composability is the idea of comining simple, reusable functions to perform more complex tasks. 
+Composability is the idea of combining simple, reusable functions to perform more complex tasks. 
 Instead of writing long, complex code in one go, we can break it down into smaller steps and compose these steps together.
 
 In JS, we can use high-order functions like `filter`, `map` and `reduce` to achieve composability. 
