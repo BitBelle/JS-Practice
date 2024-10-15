@@ -2,8 +2,7 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+The following versions of this project are currently supported with security updates:
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -14,8 +13,12 @@ currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+If you discover a security vulnerability in this project, please report it promptly:
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+1. Email: Send an email to [your-email@example.com] with the subject "Security Vulnerability Report."
+2. Details: Include a detailed description of the vulnerability, steps to reproduce it, and any relevant screenshots or logs.
+3. Response Time: Expect an initial response within 72 hours.
+4. Disclosure: If confirmed, we will work on a fix and aim to release a patch within 14 days, notifying you of the progress and timeline for public disclosure.
+5. Confidentiality: Please refrain from disclosing the vulnerability publicly until a fix is released to ensure user protection.
+
+Thank you for helping to keep this project secure!
