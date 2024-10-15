@@ -15,7 +15,7 @@ The following versions of this project are currently supported with security upd
 
 If you discover a security vulnerability in this project, please report it promptly:
 
-1. Email: Send an email to [your-email@example.com] with the subject "Security Vulnerability Report."
+1. Email: Send an email to [mercywainaina47@gmail.com] with the subject "Security Vulnerability Report."
 2. Details: Include a detailed description of the vulnerability, steps to reproduce it, and any relevant screenshots or logs.
 3. Response Time: Expect an initial response within 72 hours.
 4. Disclosure: If confirmed, we will work on a fix and aim to release a patch within 14 days, notifying you of the progress and timeline for public disclosure.
