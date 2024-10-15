@@ -60,7 +60,7 @@ It promotes reusability and clarity by separating the "what needs to be done" fr
 
 ### Key take-aways in both Abstraction and Abstracting repetition:
 
-1. Abstraction (in general) helps you simplify complex operations into reusable, high-level functions.
+1. Abstraction (in general) helps simplify complex operations into reusable, high-level functions.
 
 2. Abstracting repetition allows you to handle repeated tasks (like loops) more flexibly by passing the repeated action as a function.
 
@@ -90,7 +90,7 @@ console.log(add(2, 3));  // Outputs: 5
 
 ***What it means abstracting over actions:***
 
-With high-order functions we can also abstract over actions. Meaning that the function can now deal with values like numbers or strings and actions (functions) that desxribe what to do.
+With high-order functions we can also abstract over actions. Meaning that the function can now deal with values like numbers or strings and actions (functions) that describe what to do.
 
 **Example: Filtering out even numbers**
 
@@ -388,6 +388,7 @@ const averagePrice = availablePrices.reduce((total, price) => total + price, 0) 
 products.filter(product => product.available).length;
 
 console.log(averagePrice);
+// Output: 700
 
 ```
 
@@ -406,6 +407,7 @@ console.log(averagePriceOfAvailableProducts);
 ```
 
 **Example 2: Loop alternative**
+
 Using the traditional loop (without using `filter`, `map` and `reduce`)
 
 ```javascript
@@ -420,7 +422,6 @@ for (let product of products){
 }
 
 const averagePriceLoop = totalPrice / count;
-
 console.log(averagePriceLoop);
 
 ```
