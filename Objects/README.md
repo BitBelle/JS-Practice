@@ -2,11 +2,11 @@
 
 Objects are like containers that store different kinds of data.
 
-### Object-Oriented Programming(OOP)
+## Object-Oriented Programming(OOP)
 
 OOP is a way of organizing code using objects by grouping related things together in objects, to make it easier to understand and work with.
 
-### Abstract Data Types(ADT)
+## Abstract Data Types(ADT)
 
 ADT is hiding all the complex details and only providing the essential features(methods) to use.
 Its like when we buy a blender, we dont need to know how the inside motor works, 
@@ -41,7 +41,7 @@ car.stop();
 Just like the 'blender', we dont need to know how the car drives internally, we just need to call
 `car.drive()` and it works!
 
-### Methods
+## Methods
 
 Methods are functions attached to objects as properties. Its an action an object can perform.
 
@@ -88,7 +88,7 @@ In regular functions(those defined by `function` keyword), this changes dependin
 But arrow functions dont behave like this. They keep the `this` from the surrounding context(code around them). In other words arrow functions dont have their own `this`.
 
 
-### Prototypes
+## Prototypes
 
 Prototypes are like a blueprint for objects. Instead of giving every object its own set of properties and methods, objects can share common functionality by linking to a prototype.
 
@@ -208,7 +208,7 @@ truck.drive();
 
 ```
 
-### Classes in JavaScript
+## Classes in JavaScript
 
 In JavaScript, **classes** provide a way to define and group methods and properties for a specific type of object.
 A class is like a blueprint or template for creating objects that share similar characteristics.
@@ -333,7 +333,7 @@ Here, we are using an anonymous class to create an object that
 has just one method, `getword`, which returns `"hello"`.
 
 
-### Private Properties in JavaScript Classes
+## Private Properties in JavaScript Classes
 
 In JavaScript, **private properties** are used to hide some information 
 inside a class, so that it can't be accessed directly from outside the class.
@@ -396,7 +396,7 @@ console.log(randomGen.#max); //throws an error
 
 ```
 
-### Overriding Derived Properties
+## Overriding Derived Properties
 
 In JavaScript, objects can inherit properties from their prototypes. However, if we add or change a property directly on an object, it will "override" or "hide" the inherited property with the same name. The prototype's property will still exist but wont be accessed unless the overiding property is removed from the object.
 
@@ -428,13 +428,13 @@ console.log(Rabbit.prototype.teeth); // the prototype property remains unchanged
 
 ```
 
-#### Use Cases for Overriding
+### Use Cases for Overriding
 
 **Exception Handling** - Overriding allows an object to have specialized behavior while still benefiting from shared properties of its prototype.
     Example: The `killerRabbit` is a special kind of rabbit with different teeth, but normal rabbits have the default small teeth from the prototype.
 
 
-#### Overriding Built-in Methods
+### Overriding Built-in Methods
 
 JavaScript allows us to override properties of built-in prototypes such as `Array`, `Object`, and `Function`.
 
@@ -462,7 +462,7 @@ Object's toString() - identifies the type of the object as `"[object Array]"`.
 
 
 
-### Maps
+## Maps
 
 In JavaScript, a Map is a special type of data structure that allows 
 us to store key-value pairs. Its useful when we are associating keys 
@@ -492,7 +492,7 @@ which contains properties and methods (like `toString`).
 This means that your "map" might unintentionally contain inherited 
 properties.
 
-Example: 
+**Example:** 
 
 ```javascript
 console.log("Is toString's age known?", "toString" in ages); 
@@ -539,7 +539,7 @@ console.log(age.has("toString"));
 
 1. *Any type of key* - With a `Map`, we can use any type of key, not just strings.
 
-Example: Using objects as keys in a `Map`
+**Example: Using objects as keys in a `Map`**
 
 ```javascript
 let map = new Map();
@@ -566,7 +566,7 @@ console.log(map.get(objKey));
 
 If you still want to use a plain object but avoid inheriting the unwanted properties, you can create an object with no prototype.
 
-Example:
+**Example:**
 
 ```javascript
 let safeMap = Object.create(null);
@@ -587,7 +587,7 @@ console.log("toString" in safeMap); //false - no unwanted property
 `clear()` - removes all key-value pairs from the map.
 
 
-### Polymorphism
+## Polymorphism
 
 Polymorphism is a concept that allows objects of different types to be used in the same way, as long as they follow a common interface.
 
