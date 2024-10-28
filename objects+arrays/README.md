@@ -165,7 +165,17 @@ let firstFruit = fruits.shift()
 console.log(firstFruit);
 ```
 
-5. splice() - adds and removes elements from an array
+5. splice() - adds and removes elements from an array. It returns an array of the removed elements.
+
+*Syntax:*
+
+```javascript
+array.splice(startIndex, deleteCount, itemsToAdd);
+```
+
+* *startIndex* - The index where you want to start removing (or adding) elements.
+* *deleteCount* - The number of elements to remove from the array starting at startIndex
+* *itemsToAdd* - (optional) Elements you want to add to the array at startIndex
 
 ```javascript
 // Create an Array
@@ -249,6 +259,34 @@ let fruits = ["apple", "banana", "mango"];
 
 console.log(fruits.includes("banana")); // true
 console.log(fruits.includes("orange")); // false
+```
+
+12. find() - returns the first element in an array that satisfies the provided condition. If element is not found it returns undefined
+
+```javascript
+const cars = [
+    { make: "Toyota", model: "Camry" },
+    { make: "Ford", model: "Mustang" },
+    { make: "Chevrolet", model: "Malibu" }
+];
+
+const car = cars.find(c => c.model === "Mustang");
+console.log(car); // { make: "Ford", model: "Mustang" }
+
+```
+
+13. findIndex() - returns the index of the first element in an array that satisfies the provided condition
+
+```javascript
+const cars = [
+    { make: "Toyota", model: "Camry" },
+    { make: "Ford", model: "Mustang" },
+    { make: "Chevrolet", model: "Malibu" }
+];
+
+const index = cars.findIndex(c => c.model === "Mustang");
+console.log(index); // Output: 1
+
 ```
 
 ## Iterating Over Arrays
