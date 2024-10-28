@@ -633,3 +633,325 @@ Array.prototype.forEach.call(arrayLikeObject, element => console.log(element));
 
 ```
 The above example demonstrates *polymorphism* because we can use the `forEach()` function on both regular arrays and objects that behave like arrays.
+
+
+## Getters, Setters and Statics
+
+***Getter***
+
+Is like a method that allows us to "get" a property value, but we dont call it like a function. It behaves like a regular property access. They are useful when fetching a property value dyamically, without storing it.
+
+**Example:**
+
+```javascript
+let varyingSize = {
+  get size() {
+    return Math.floor(Math.random() * 100);  // Random size each time it's accessed
+  }
+};
+
+console.log(varyingSize.size); // Random value (e.g. 73)
+console.log(varyingSize.size); // Another random value (e.g. 49)
+
+```
+
+***Setter***
+
+Allows us to control what happens when a value is assigned to a property. Its useful for data validation, modifying data before storing it or transforming values.
+
+**Example:**
+
+```javascript
+class Temperature {
+  constructor(celsius) {
+    this.celsius = celsius; 
+  }
+
+  get fahrenheit() {
+    // Convert Celsius to Fahrenheit when accessed
+    return this.celsius * 1.8 + 32;  
+  }
+
+  set fahrenheit(value) {
+    // Convert Fahrenheit to Celsius when set
+    this.celsius = (value - 32) / 1.8;  
+  }
+}
+
+let temp = new Temperature(22);
+console.log(temp.fahrenheit);  // 71.6 (Celsius to Fahrenheit)
+
+temp.fahrenheit = 86;
+console.log(temp.celsius);  // → 30 (Converted back to Celsius)
+
+```
+
+***Static***
+
+Static properties and methods are attached to the class itself, thus, cannot be directly accessed on instances of the class.
+Static methods are often utility functions(functions related to the class), such as functions to create or clone objects, 
+whereas static properties are useful for caches, fixed-configuration or any other data you dont need to be replicated across instances.
+
+**Example:**
+
+```javascript
+class Temperature{
+    constructor(celcius){
+        this.celsius = celsius;
+    }
+
+    static fromFarenheight(value){
+        //converting to celsius 
+        return new Temperature((value - 32) / 1.8);
+    }
+
+}
+
+let boilingPoint = Temperature.fromFarenheight(212);
+console.log(boilingPoint.celsius);
+
+```
+
+## Symbols
+
+A symbol is a new primitive data type introduced in ES6(2015) tha is used as a unique identifier for object properties. 
+
+**Why do we need Symbols?**
+
+Imagine you have an object with a property called `length`. Now, if multiple parts of your code or libraries use the `length` property for different purposes, they might conflict with each other. This is where *Symbols* come in handy, because symbols are *guaranteed to be unique* and can serve as property names without causing any conflicts.
+
+**Example 1: Creating Symbols**
+
+Symbols are created using the Symbol() function
+
+```javascript
+let sym1 = Symbol("mySymbol");
+let sym2 = Symbol("mySymbol");
+
+console.log(sym1 === sym2) //we get false because each symbol is unique
+
+```
+
+`sym1` and `sym2` have the same description `("mySymbol")`, but they are not equal because every time we call `Symbol()`, a new unique symbol is created.
+
+
+**Example 2: Using Symbols as Object Properties**
+
+Symbols can be used as property names. Unlike strings, symbols ensure that properties are truly unique, even if the same description is used for the symbols.
+
+```javascript
+let sym = Symbol("mySymbol");
+
+let obj = {
+    [sym]: 42, //using symbol as a property key
+    name: "rabbit"
+};
+
+console.log(obj[sym]); //accessing the symbol property
+console.log(obj.name);
+
+```
+The symbol `sym` is used as a property name for the object obj. You access it using bracket notation, `obj[sym]`, because `obj.sym` would look for a string key, not a symbol.
+
+
+**Why Use Symbols as Property Names?**
+
+Symbols are ideal when we want to hide or protect properties. Since they are unique and cannot accidentally clash with other property names. They are safe to use with things like internal values or "private" properties.
+
+**Example 3: Preventing Property Conflicts**
+
+Let's say we have a Car object. We want to have two pieces of information:
+    * The number of doors of the car (let's call it doors).
+    * The maximum speed in kilometers per hour (we'll also call this speed). 
+
+Normally, both could be string-based properties, but imagine you wanted to add a special property for the internal engine speed limit to ensure it's safe, but you don't want this to conflict with the public speed property.
+
+```javascript
+const internalSpeedLimit = Symbol("speed");
+
+let car = {
+    doors: 4;
+    speed: 200,
+    [internalSpeedLimit]: 180
+}
+
+// accessing public properties
+console.log(`The car has ${car.doors} doors.`);
+console.log(`The car's speed is ${car.speed}km/h`);
+
+//accessing the symbol property
+console.log(`Internal engine speed limit: ${car[internalSpeedLimit]}km/h.`);
+
+```
+
+**Example 4: Using Symbols for Iterators**
+
+Symbols are also well known for their built-in behaviors, like making objects iterable with `Symbol.iterator`.
+
+```javascript
+let myCollection = {
+    items: ["apple", "banana", "orange"],
+    [Symbol.iterator](){
+        let i = 0;
+        return {
+            next: () => {
+                if (i < this.items.length){
+                    return {
+                        value: this.items[++], 
+                        done: false
+                    }
+                } else {
+                    return {
+                        done: true
+                    }
+                }
+            }
+        }
+    }
+}
+
+for (let item of myCollection){
+    console.log(item)
+}
+
+```
+
+## Iterator Interface
+
+In JavaScript, objects that are iterable can be looped over using for/of loops. To be iterable, the object must have a special method called [Symbol.iterator] that returns an iterator object.
+
+An *iterator* is an object that implements a method called `next()`. This method returns an object with two properties:
+    * `value`: The next value in the iteration.
+    * `done`: A boolean that is `true` when there are no more values to return(end of the iteration) and `false` otherwise.
+
+
+**Example: Simple String Iterator**
+
+```javascript
+let okIterator = "OK"[Symbol.iterator]();
+
+console.log(okIterator.next()); //{value: "O", done: false}
+
+console.log(okIterator.next()); //{value: "K", done: false}
+
+console.log(okIterator.next()); //{value: undefined, done: true} no more characters
+
+```
+
+## Inheritance
+
+Inheritance in JavaScript, allows a subclass to derive properties 
+and behaviors from an existing class(a *superclass*).
+This comes in handy when we want to create a class that behaves 
+similarly to another but with some new or modified functionality.
+
+
+**Example Scenario:**
+Creating a simple app for vehicles. We have a basic class for a 
+Vehicle and want to create more specific types of vehicles(like Car and Truck) that inherit from it.
+
+*1. Creating the Superclass `vehicle`*
+
+```javascript
+class Vehicle {
+    constructor(brand, model){
+        this.brand = brand;
+        this.model = model;
+    }
+
+    //general method for all vehicles
+    startEngine(){
+        console.log(`${this.brand} ${this.model}'s engine started!`);
+    }
+
+}
+
+```
+
+*2. Creating the Subclass `Car`*
+
+```javascript
+class Car extends Vehicle {
+    constructor(brand, model seats){
+        //calling the parent class (Vehicle) constructor
+        super(brand, model);
+        this.seats = seats
+    }
+
+    //a new method specific to the Car class
+    displaySeats(){
+        console.log(`${this.brand} ${this.model} has ${this.seats} seats.`)
+    }
+}
+
+```
+
+*3. Using the `Car` Class*
+
+```javascript
+const myCar = new Car("Toyota", "Corolla", 5);
+myCar.startEngine();
+myCar.displaySeats();
+
+```
+
+## The `instanceof` Operator
+
+The `instanceof` operator allows us to determine if an object was 
+created from a particular constructor function or class. 
+It checks the prototype chain of the object to see if it matches 
+the prototype of the constructor function.
+
+**Syntax**
+
+```javascript
+object instanceof Constructor
+
+```
+`object` - is the instance we want to check.
+`Constructor` - is the function or class we want to check against.
+
+**Example 1**
+
+```javascript
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+class Dog extends Animal {
+  bark() {
+    console.log(`${this.name} says woof!`);
+  }
+}
+
+class Cat extends Animal {
+  meow() {
+    console.log(`${this.name} says meow!`);
+  }
+}
+
+//using instance of to check instances
+const myDog = new Dog('Buddy');
+const myCat = new Cat('Whiskers');
+
+console.log(myDog instanceof Dog);     // true
+console.log(myDog instanceof Animal);  //  true
+console.log(myCat instanceof Cat);     //  true
+console.log(myCat instanceof Animal);  //  true
+console.log(myCat instanceof Dog);     //  false
+
+```
+
+**Example 2: Using instanceof with Built-in types**
+
+`instanceof` works with built-in constructors as well. 
+For example, let's check if an array is an instance of Array.
+
+```javascript
+const myArray = [1, 2, 3];
+console.log(myArray instanceof Array);     //  true - because myArray is an instanceof Array 
+console.log(myArray instanceof Object);    //  true - because all arrays are objects in JS
+console.log(myArray instanceof String);    //  false
+```
