@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>JavaScript Learning Journey</title>
 </head>
+
 <body>
     <header>
         <h2>JavaScript Practice Hub</h2>
@@ -17,9 +19,11 @@
             <h3>Topics</h3>
             <ul>
                 <li>Introduction to JavaScript</li>
-                <li>Variables: Primitive and Reference</li>
-                <li>Data Types</li>
-                <li>Operators</li>
+                <li>Why JavaScript?</li>
+                <li>JavaScript Basics</li>
+                <li>Scope</li>
+                <li>Functions</li>
+                <li>Learning Resources</li>
             </ul>
         </aside>
 
@@ -27,13 +31,16 @@
             <!-- Introduction Section -->
             <section id="introduction">
                 <h3>Introduction to JavaScript</h3>
-                <p>JavaScript, often abbreviated as JS, is a versatile and widely-used programming language for web development. From simple interactions to full-fledged applications, JavaScript brings web pages to life!</p>
+                <p>JavaScript, often abbreviated as JS, is a versatile and widely-used programming language for web
+                    development. From simple interactions to full-fledged applications, JavaScript brings web pages to
+                    life!</p>
             </section>
 
             <!-- Why JavaScript? -->
             <section id="why-js">
                 <h3>Why JavaScript?</h3>
-                <p>JavaScript is the backbone of interactive web pages. It allows developers to create dynamic content, enhance user interfaces, and build everything from small-scale websites to massive applications.</p>
+                <p>JavaScript is the backbone of interactive web pages. It allows developers to create dynamic content,
+                    enhance user interfaces, and build everything from small-scale websites to massive applications.</p>
                 <ul>
                     <li>It’s supported by all major browsers.</li>
                     <li>JavaScript powers 97% of all websites!</li>
@@ -41,12 +48,14 @@
                 </ul>
             </section>
 
-            <!-- Interesting Bits Section -->
+            <!-- Interesting Facts Section -->
             <section id="interesting-bits">
                 <h3>Interesting Facts about JavaScript</h3>
                 <ul>
-                    <li><strong>Scripting Language:</strong> JavaScript executes code at runtime, making it dynamic and flexible.</li>
-                    <li><strong>Client-side Language:</strong> JS runs in web browsers, interacting with servers to fetch and display information on webpages.</li>
+                    <li><strong>Scripting Language:</strong> JavaScript executes code at runtime, making it dynamic and
+                        flexible.</li>
+                    <li><strong>Client-side Language:</strong> JS runs in web browsers, interacting with servers to
+                        fetch and display information on webpages.</li>
                 </ul>
             </section>
 
@@ -54,7 +63,8 @@
             <section id="basics">
                 <h3>JavaScript Basics</h3>
                 <h4>Variables</h4>
-                <p>A variable is a container for storing data. You can declare variables using <code>let</code>, <code>const</code>, or <code>var</code>:</p>
+                <p>A variable is a container for storing data. You can declare variables using <code>let</code>,
+                    <code>const</code>, or <code>var</code>:</p>
                 <ul>
                     <li><strong>let:</strong> Block-scoped variable that can be updated but not re-declared.</li>
                     <li><strong>const:</strong> Block-scoped constant that cannot be updated or re-declared.</li>
@@ -62,16 +72,19 @@
                 </ul>
 
                 <h4>Data Types</h4>
-                <p>JavaScript has two main types of data: primitives and objects.</p>
+                <p>JavaScript has two main types of data: primitives and reference types.</p>
                 <ul>
                     <li><strong>Primitive Types:</strong> Numbers, Strings, Booleans, Null, Undefined, Symbol, BigInt.</li>
-                    <li><strong>Objects:</strong> Complex data types that can hold many values.</li>
+                    <li><strong>Reference Types:</strong> These refer to memory addresses rather than actual values. Example:
+                        <strong>Objects:</strong> Complex data types that can hold many values.</li>
                 </ul>
             </section>
 
-            <!-- Example Section -->
-            <section id="examples">
-                <h3>Example: Understanding Scoping with <code>let</code></h3>
+            <!-- Scope Section -->
+            <section id="scope">
+                <h3>Scope</h3>
+                <p>A scope refers to an area. Scoping is crucial for understanding concepts like hoisting. Here’s an overview of the different scopes: Global-scope, Block-scope, and Function-scope.</p>
+                <h4>Example: Understanding Scoping with <code>let</code></h4>
                 <pre>
 function letScoping() {
     let a = 10;
@@ -86,12 +99,68 @@ function letScoping() {
 letScoping();
                 </pre>
                 <p>The variable <code>a</code> inside the <code>if</code> block is separate due to block-scoping.</p>
+
+                <h4>Example: Understanding Scoping with <code>var</code></h4>
+                <pre>
+function varScoping() {
+    var a = 10;
+
+    if (true) {
+        var a = 20;
+        console.log("Inside if block: " + a); // Output: 20
+    }
+
+    console.log("Outside if block: " + a); // Output: 20
+}
+varScoping();
+                </pre>
+                <p>The variable <code>a</code> inside the <code>if</code> block is not separate due to function-scoping.</p>
+            </section>
+
+            <!-- Functions Section -->
+            <section id="functions">
+                <h3>Functions</h3>
+                <p>Functions are operations that handle/execute specific tasks, such as adding two numbers.</p>
+                <p>Key points to note about functions in JavaScript:</p>
+                <ul>
+                    <li>Functions are first-class citizens: They can return other functions, be used as values, and be passed as arguments to other functions.</li>
+                </ul>
+                <h4>Function Declaration</h4>
+                <p>This is how to declare functions:</p>
+                <pre>
+function myFunction() {
+    return "My First Function";
+}
+                </pre>
+                <p>In this declaration, <code>function</code> is the keyword, and <code>myFunction</code> is the name of our function.</p>
+
+                <h4>Lexical Scoping</h4>
+                <p>In JavaScript, a function can access variables from its own scope, as well as from the outer (or parent) scopes.</p>
+                <pre>
+const hummus = function(factor) {
+    const ingredient = function(amount, unit, name) {
+        let ingredientAmount = amount * factor; // Accesses `factor` from outer scope
+        if (ingredientAmount > 1) {
+            unit += "s"; // Adds "s" if plural
+        }
+        console.log(`${ingredientAmount} ${unit} ${name}`); // Logs the result
+    };
+    // Calling `ingredient` function multiple times
+    ingredient(1, "can", "chickpeas");
+    ingredient(0.25, "cup", "tahini");
+    ingredient(0.25, "cup", "lemon juice");
+    ingredient(1, "clove", "garlic");
+    ingredient(2, "tablespoon", "olive oil");
+    ingredient(0.5, "teaspoon", "cumin");
+};
+                </pre>
+                <p>This example illustrates how lexical scoping works.</p>
             </section>
 
             <!-- Learning Resources Section -->
             <section id="resources">
                 <h3>Learning Resources</h3>
-                <p>Here are some of the resources I'm using to learn JavaScript:</p>
+                <p>Here are some resources I'm using to learn JavaScript:</p>
                 <ul>
                     <li><a href="https://www.youtube.com/@NetNinja" target="_blank">JavaScript Tutorials on YouTube</a></li>
                     <li><a href="https://eloquentjavascript.net/" target="_blank">Eloquent JavaScript (Book)</a></li>
@@ -105,4 +174,5 @@ letScoping();
         <p>Happy Coding! | Mercy's JavaScript Learning Journey © 2024</p>
     </footer>
 </body>
+
 </html>

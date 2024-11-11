@@ -8,18 +8,23 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-image: url('path/to/texture.png'); /* Add a light texture */
+    background-size: cover;
 }
 
+/* Header Styles */
 header {
     background-color: #5e5b4c8f;
     color: #edf2f4;
     text-align: center;
     height: 5%;
-
+    padding: 20px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 header h2 {
     font-size: 2rem;
+    margin: 0;
 }
 
 header p {
@@ -37,13 +42,18 @@ header p {
     background-color: #fff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-radius: 12px;
+    transition: transform 0.3s;
+}
+
+.container:hover {
+    transform: scale(1.01); /* Slight scaling on hover */
 }
 
 /* Sidebar styles */
 aside#topics {
     width: 250px;
     background-color: #F5F5F5;
-    color: #fff;
+    color: #333; /* Adjusted for better contrast */
     padding: 20px;
     border-radius: 12px;
     margin-right: 30px;
@@ -52,6 +62,7 @@ aside#topics {
 
 aside#topics h3 {
     margin-top: 0;
+    font-weight: bold;
 }
 
 aside#topics ul {
@@ -62,11 +73,13 @@ aside#topics ul {
 aside#topics ul li {
     margin: 15px 0;
     font-size: 1rem;
+    transition: color 0.3s;
 }
 
 aside#topics ul li:hover {
     cursor: pointer;
-    color:  #5e5b4cf4;
+    color: #5e5b4cf4;
+    text-decoration: underline; /* Add underline on hover */
 }
 
 /* Main content styles */
@@ -76,10 +89,16 @@ main {
 
 section {
     margin-bottom: 30px;
+    padding: 15px; /* Add padding to sections */
+    background-color: #fafafa; /* Light background for sections */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 h3, h4 {
     color: #968b4f;
+    font-family: 'Arial', sans-serif; /* Different font for headings */
+    margin-bottom: 10px; /* Space below headings */
 }
 
 p, ul {
@@ -109,10 +128,6 @@ footer {
     margin-top: auto;
 }
 
-footer p {
-    margin: 0;
-}
-
 /* Link styles */
 a {
     text-decoration: none;
@@ -122,4 +137,63 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column; /* Stack layout on smaller screens */
+    }
+
+    aside#topics {
+        margin-right: 0; /* Remove margin on mobile */
+        margin-bottom: 20px; /* Add space below sidebar */
+    }
+
+    section {
+        flex: 1 1 100%; /* Full width for sections */
+        margin: 0; /* Remove margin to prevent overflow */
+    }
+
+    header h2 {
+        font-size: 2rem; /* Smaller heading for mobile */
+    }
+
+    header p {
+        font-size: 1rem; /* Smaller paragraph for mobile */
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 15px 5px; /* Adjust header padding for smaller screens */
+    }
+
+    header h2 {
+        font-size: 1.8rem; /* Further reduce heading size */
+    }
+
+    header p {
+        font-size: 0.9rem; /* Further reduce paragraph size */
+    }
+
+    aside#topics {
+        padding: 15px; /* Adjust sidebar padding */
+    }
+
+    aside#topics ul li {
+        font-size: 0.9rem; /* Smaller list items */
+    }
+
+    section {
+        padding: 10px; /* Adjust section padding */
+    }
+
+    pre {
+        padding: 10px; /* Adjust preformatted text padding */
+    }
+
+    footer {
+        padding: 15px; /* Adjust footer padding */
+    }
 }
