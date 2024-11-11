@@ -114,20 +114,18 @@ blackRabbit.type = "black";
 blackRabbit.speak("I fear darkness!");
 
 ```
+* `Object.create()` - method creates a new object and sets its internal prototype (`[[Prototype]]`) to the specified object (`protoRabbit`).
 
 * `protoRabbit` - is the prototype object that contains speak method. Its like a template for all rabbits.
 
-* `blackRabbit` - is an individual rabbit. Instead of creating a separate `speak` method for blackRabbit, 
-we link it to `protoRabbit` using `Object.create(protoRabbit)`.
+* `blackRabbit` - is an individual rabbit. Instead of creating a separate `speak` method for blackRabbit, we link it to `protoRabbit` using `Object.create(protoRabbit)`.
 
-* When `blackRabbit.speak()` is called - even though speak isnt directly 
-on blackRabbit, JavaScript automatically looks at its prototype(protoRabbit) to find the `speak` method.
+* When `blackRabbit.speak()` is called - even though speak isnt directly on blackRabbit, JavaScript automatically looks at its prototype(protoRabbit) to find the `speak` method.
 
 **How Prototypes Work**
 
 In JavaScript, every object has a hidden property called `[[Prototype]]`. 
-When we try to access a property or method on an object, and it doesnt 
-exist on that object, JavaScript will look up the prototype chain to find it.
+When we try to access a property or method on an object, and it doesnt exist on that object, JavaScript will look up the prototype chain to find it.
 
 **Example 2:**
 ```javascript
@@ -152,6 +150,7 @@ This process continues up the chain:
 We can check the prototype of an object using `Object.getPrototypeOf`
 
 ```javascript
+let empty = {}
 console.log(Object.getPrototypeOf({}) === Object.prototype);
 //true
 
