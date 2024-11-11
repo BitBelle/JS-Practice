@@ -1,0 +1,13 @@
+{
+  "name": "days",
+  "version": "1.0.0",
+  "main": "main.js",
+  "type" : "module",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "keywords": [],
+  "author": "mercy",
+  "license": "ISC",
+  "description": "playing around with es-modules"
+}
