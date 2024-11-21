@@ -44,20 +44,21 @@ console.log(result);
 
 So here we are making a call to the outer function, so this is what goes down;
 
-*variable a gets created and is initialized with 10, 
-the next line is a function declaration, so no execution
-now the return statement, which returns inner. 
-**NB.** return statement dosent execute a function without the () braces, so in our case when JS looks for inner and finds its a function so it doesnt execute it..rather it returns the whole function body.
-*
+    * variable a gets created and is initialized with 10
+    * The next line is a function declaration, so no execution now the return statement, which returns inner. 
 
-So once the function body is returned, the outer function is out of the call stack, inner's function body gets stored in our result variable and then gets printed to the console.
+    **NB.** return statement dosent execute a function without the () braces, so in our case when JS looks for inner and finds its a function so it doesnt execute it..rather it returns the whole function body.
 
-So now in other words our result variable automatically becomes a function since it now contains this:
+    * So once the function body is returned, the outer function is out of the call stack, inner's function body gets stored in our result variable and then gets printed to the console.
+
+    * So now in other words our result variable automatically becomes a function since it now contains this:
+
 ```javascript
 function inner(){
         let b = 20
         console.log(a + b)
     }
+
 ```
 
 In executing this we can call the result function:
@@ -67,8 +68,9 @@ In executing this we can call the result function:
 
 This is now what happens;
 
- A new variable b is created, then in the next line we have variable *a* which we are also accessing. So here is where closure comes in. Since we are trying to access a variable thats not in our current scope. 
- What closure does is, when our outer function was being executed closure preserved that chain scope so now what it does is simply remembering that there was a variable *a* that was created and initialized with 20. So now the addition exection gets done and the result is logged to the console.
+ A new variable b is created, then in the next line we have variable *a* which we are also accessing. So here is where closure comes in. 
+ Since we are trying to access a variable thats not in our current scope. 
+ What closure does is, when our outer function was being executed closure preserved that chain scope so now what it does is simply remembering that there was a variable *a* that was created and initialized with 20. So now the addition execution gets done and the result is logged to the console.
 
 
 
