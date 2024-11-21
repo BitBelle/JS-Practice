@@ -18,6 +18,7 @@ Example:
 ```
 
 ### JSON in Javascript: JSON.stringify and JSON.parse
+
 JSON.stringify() - This function takes in a JavaScript object and converts it into a JSON string.
 
 JSON.parse() - This function takes in a JSON string and converts it back into the original JavaScript object.
