@@ -118,8 +118,10 @@ function compareFiles(fileA, fileB, callback){
 
 **Issues with Callback style:**
 
-*Indentation levels* - Each asynchronous task inside a callback adds a new level of indentation, often referred to as *"callback hell"* or *"pyramid of doom". This structure quickly becomes hard to read and manage, especially with more complex operations.
+*Indentation levels* - Each asynchronous task inside a callback adds a new level of indentation, often referred to as *"callback hell"* or *"pyramid of doom"*. This structure quickly becomes hard to read and manage, especially with more complex operations.
+
 *Error Handling* - If an error occurs in one of the nested callbacks, handling it becomes tricky. Each level of the callback may need separate error handling logic, making the code error-prone.
+
 *Contagious Asynchronocity* - Any function that uses asynchronous operations (like `compareFiles`) needs to rely on callbacks as well. This means that if part of your codebase is async, it tends to "infect" other parts with asynchronicity, leading to widespread use of callbacks.
 
 **Why Callbacks are considered error-prone**
@@ -154,6 +156,42 @@ fetchData((error, data) => {
 If an error occurs, `fetchedData` attempts to handle it by calling the calllback with an error argument. However:
     * We have to remember to check `error` in every callback
     * Errors may propagate unpredictably, and there's no standard way to handle them across different functions, which can cause issues.
+
+**Example 2:**
+
+```javascript
+function fetchData(callback){
+    setTimeout(() => {
+        let data = "Some data";
+        callback(null, data); //call the callback with data when its ready
+    }, 1000);
+}
+
+fetchData((error, data) => {
+    if(error) {
+        console.log("Error:", error)
+    } else {
+        fetchMoreData((error, moreData) => {
+            if(error){
+                console.log("Error:", error);
+            } else {
+                processData(moreData, (error, result) => {
+                    if (error) {
+                        console.log("Error:", error);
+                    } else {
+                        console.log("Final result:", result)
+                    }
+                });
+            }
+        });
+    }
+});
+
+```
+
+In this callback hell, the deeper we go, the harder it becomes to maintain and understand.
+Also: * Error handling becomes complicated and we need to handle errors at each level
+      * Sequential operations becomes messy and difficult to track
 
 
 ## Promises
@@ -199,6 +237,26 @@ We can create a promise using `new Promise()` and pass it a function that accept
     * `resolve` - When the asynchronous operation finishes successfully
     * `reject` - If there is an error during the operation.
 
+A promise object has the following internal properties:
+
+1. state: This property can have the following values,
+
+    * *pending* - When the execution starts.
+
+    * *fulfilled* - When the promise resolves successfully.
+
+    * *rejected* - When the promise rejects.
+
+2. result: This property can have the following values,
+    
+    * *undefined* - Initially, when the state value is `pending`.
+
+    * *value* - When the promise is resolved(value).
+
+    * *error* - When the promise is rejected.
+
+A promise that has resolved or rejected is called *settled*
+
 **Example 1:**
 
 ```javascript
@@ -233,6 +291,10 @@ So, instead of passing a callback function to handle the result, the fetchData()
 
 One of the coolest things about promises is that they can be *chained*. Each `then()` method returns a new promise, which means we can continue adding operations after the first one finishes.
 
+Each `.then()` returns a promise to keep the chain going. It ensures that: 
+    * Any returned value in a `.then()` handler gets wrapped in a promise so it can be passed along the chain.
+    * If an error occurs or its thrown in any handler, it can be caught by the next `.catch()` or handler in subsequent `.then()` calls.
+
 **Example:**
 
 ```javascript
@@ -263,8 +325,8 @@ fetchData()
     .catch((error) => {
         console.error("Error:", error)
     });
-```
 
+```
 
 * First, the `fetchUserData()` promise resolves, and its result is passed into the next `then()`.
 * Then, the `fetchUserDetails()` promise resolves, and its result is passed to the next `then()`.
@@ -289,3 +351,110 @@ In this case, `Promise.resolve(42)` is like a shortcut for a promise that has al
 
 
 ### Handling multiple asynchronous operations
+
+We can chain promises to perform multiple asynchronous actions in a specific sequence, just like a pipeline.
+
+```javascript
+function textFile(filename){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let content = "File content of " + filename;
+            resolve(content); //resolve with file content after 1sec
+        }, 1000);
+    });
+}
+
+textFile("file1.txt")
+    .then(content => {
+        console.log(content);// log content of file1.txt
+        return textFile("file2.txt")
+    })
+    .then(content => {
+        console.log(content) //logs content of file2
+    })
+    .catch(error => {
+        console.log(error); //catch any error that occurs in the chain
+    });
+
+```
+Here, each `then()` wauts for the previous promise to resolve before moving to the next one.
+
+## How Promises Improve Upon Callbacks
+
+1. Cleaner syntax - Promises provide a more readable syntax for handling asynchronous code. Instead of passing callback functions, we can chain `.then()` calls that represent different stages of an operation.
+
+2. Avoiding Callback Hell - Since promises return an object that represents the result of an asynchronous operation, we can use `then()` to attach handlers for success (resolved) or failure (rejected) at each stage, and they form a clean sequence of operations.
+
+3. Error handling - With promsies, all errors are handled in one place using `.catch()` at the end of the chain. Eliminating the need for multiple error handlers in the nested callbacks.
+
+4. Consistency - A promise will always either resolve with a value(success) or reject with an error(failure). We know wha to expect from it: a result or an error. A callback, on the other hand, is more flexible and can be prone to msitakes(like missing an error argument or not handling it properly) 
+
+
+## async/await
+
+While promises significantly improved the readability and manageability of asynchronous code compared to callbacks, promise chains still become hard to read and write, especially for complex workflows with multiple asynchronous steps.
+
+* `async` - returns a promise
+* `await` - Makes the JS function execution wait until a promise is settled.
+            Its syntactic sugar(feature that makes code easier to read or write but doesnt add new functionality - simplifies or hides underlying complexities without changing what the code can do) for waiting for a promise to be resolved.
+
+`aync/await` still uses promises under the hood. Its just a more user-friendly way to work with them
+
+
+**Reason for introducing async/await**
+
+1. *Improved readability* - `async/await` allows asynchronous code to look more like synchronous code making it easier to understand at a glance, compared to promise chaining.
+
+2. *Error handling* - `async/await` we can use `try...catch` blocks to handle errors.
+
+3. *Simplifies logic* - async/await simplifies writing and managing workflows.
+
+**Example: Using Promises**
+
+```javascript
+function fetchData(){
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve("Data Loaded")
+        }, 1000)
+    }); 
+}
+
+fetchData()
+    .then(data => {
+        console.log(data);
+        return "Processing data...";
+    })
+    .then(result => {
+        console.log(result)
+    })
+    .catch(error => {
+        console.error(error)
+    })
+
+```
+
+**Example: Using Async/Await**
+
+```javascript
+async function processData() {
+    try{
+        const data = await fetchData();
+        console.log(data);
+    
+        const result = "Processing data...";
+        console.log(result);
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+processData();
+
+```
+
+Here, `async/await` is syntactic sugar:
+    * `await fetchData()` - is shorthand for waiting until the promise returned by `fetchData()` resolves
+    
+    * It eliminates the need for `.then()` chaining and makes the flow of the program more intuitive.
