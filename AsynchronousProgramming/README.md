@@ -199,7 +199,9 @@ Also: * Error handling becomes complicated and we need to handle errors at each 
 A *Promise* is like a receipt for an action that will eventually give you a result. But the result isnt available yet, so the promise represents that future value.
 
 A promise can either:
+
     * *Resolve* - complete successfully and provide the result, or
+
     * *Reject* - fail and provide an error
 
 When creating a promise, we are essentially saying: "Here's a placeholder for something I will give you later."
@@ -350,6 +352,17 @@ resolvedPromise.then(value => {
 In this case, `Promise.resolve(42)` is like a shortcut for a promise that has already been resolved with the value `42`.
 
 
+### Promise.all()
+
+`Promise.all` is a method that takes an array of promises and returns a single promise.
+
+The returned promise:
+
+    1. Resolves when all input promises resolve, with an array of their resolved values.
+
+    2. Rejects immediately if any input promise rejects, with the rejection reason
+    
+
 ### Handling multiple asynchronous operations
 
 We can chain promises to perform multiple asynchronous actions in a specific sequence, just like a pipeline.
@@ -455,6 +468,85 @@ processData();
 ```
 
 Here, `async/await` is syntactic sugar:
-    * `await fetchData()` - is shorthand for waiting until the promise returned by `fetchData()` resolves
+
+    *  `await fetchData()` - is shorthand for waiting until the promise returned by `fetchData()` resolves
     
-    * It eliminates the need for `.then()` chaining and makes the flow of the program more intuitive.
+    *  It eliminates the need for `.then()` chaining and makes the flow of the program more intuitive.
+
+
+
+## The Event Loop
+
+The *event loop* is a crucial concept in JavaScript that enables asynchronous programming. It ensures that operations like fetching data, waiting for a timer, or responding to user input do not block the main program flow.
+
+JavaScript is *single-threaded*, meaning it can only execute one thing at a time on the main thread.
+
+The *event loop* allows JavaScript to perform non-blocking operations by delegating tasks to the browser (or Node.js environment) and queuing their callbacks to be executed later.
+
+We can think of it as:
+
+    * A *queue* where tasks (callbacks) are waiting to be executed.
+
+    * A *loop* that continuously checks if the main thread is feree and then executes the next task from the queue.
+
+
+**How it Works**
+
+1. **Main Script Execution**
+
+The main program (synchronous code) runs first, line by line, on the call stack
+The call stack manages the execution of programs.
+
+2. **Asynchronous Operations**
+
+Functions like `setTimeout`, `fetch`, `event listeners` are registered. Their actual work (like timimg or fetching data) is offloaded to the browser or runtime environment.
+
+3. **Callback Queue**
+
+Once an asynchronous operation is complete, its callback is added to the *callback queue*
+
+4. **Event Loop**
+
+The event loop constantly checks:
+
+    * Is the *call stack* empty?
+    If yes, it dequeues a callback from the *Task queue/callback queue* or from the *Microtask queue/Promise Queue* and pushes it onto the callstack for execution.
+
+
+**Example: Execution in a callstack**
+
+```javascript
+console.log("One!")
+
+console.log("Two!")
+
+function logThree(){
+    console.log("Three!")
+}
+
+function logThreeAndFour(){
+    logThree()
+    console.log("Four!")
+}
+
+logThreeAndFour();
+
+```
+
+So, in the callstack this is what goes on:
+
+* `console.log("One!")` - So a new excecution context is created, pushed onto the call stack which is then evaluated and logs `one`.
+
+* `console.log("Two!")` - A new execution context is also created, pushed onto the callstack, then evaluated and logs `two`. 
+
+* `logThreeAndFour();` - Here, we invoke the `logThreeAndFour();` function, within this body function, we invoke yet another function `logThree` and in the body of `logThree` we `console.log("Three!")`
+
+So in the call stack we have something like:
+    
+    `![callstack](image.png)`
+
+So, eventually 3 is logged, `logThree()` execution context is popped off the call stack.
+
+`console.log("Four!")` execution context which is in the body of `logThreeAndFour` is created, evalauated and logs Three then logThreeAndFour() gets popped off the call stack.
+
+
