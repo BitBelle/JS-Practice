@@ -487,7 +487,7 @@ We can think of it as:
 
     * A *queue* where tasks (callbacks) are waiting to be executed.
 
-    * A *loop* that continuously checks if the main thread is feree and then executes the next task from the queue.
+    * A *loop* that continuously checks if the main thread is free and then executes the next task from the queue.
 
 
 **How it Works**
@@ -509,8 +509,8 @@ Once an asynchronous operation is complete, its callback is added to the *callba
 
 The event loop constantly checks:
 
-    * Is the *call stack* empty?
-    If yes, it dequeues a callback from the *Task queue/callback queue* or from the *Microtask queue/Promise Queue* and pushes it onto the callstack for execution.
+* Is the *call stack* empty?
+If yes, it dequeues a callback from the *Task queue/callback queue* or from the *Microtask queue/Promise Queue* and pushes it onto the callstack for execution.
 
 
 **Example: Execution in a callstack**
@@ -542,11 +542,15 @@ So, in the callstack this is what goes on:
 * `logThreeAndFour();` - Here, we invoke the `logThreeAndFour();` function, within this body function, we invoke yet another function `logThree` and in the body of `logThree` we `console.log("Three!")`
 
 So in the call stack we have something like:
+
+   `console.log("Three")`
+   
+   `logThree()`
     
-    `![callstack](image.png)`
+   `logThreeAndFour()`
 
 So, eventually 3 is logged, `logThree()` execution context is popped off the call stack.
 
-`console.log("Four!")` execution context which is in the body of `logThreeAndFour` is created, evalauated and logs Three then logThreeAndFour() gets popped off the call stack.
+`console.log("Four!")` execution context which is in the body of `logThreeAndFour` is created, evalauated and logs Four then logThreeAndFour() gets popped off the call stack.
 
 
