@@ -49,13 +49,13 @@ obj1.age = 20;
 
 Example:
 ```javascript
-<!-- object is mutable -->
+// object is mutable
 let person = {
     name: "Alice";
     age: 25;
 }
 
-<!-- we can change its properties -->
+// we can change its properties
 person.name = "Bob";
 console.log(person)
 ```
@@ -69,8 +69,9 @@ console.log(numbers)
 ```
 
 **Immutable**
-Primitive values are immutable.
-Primitives are passed by value, meaning changes to a copy do not affet the original.
+
+* Primitive values are immutable.
+* Primitives are passed by value, meaning changes to a copy do not affet the original.
 
 Example:
 
@@ -116,6 +117,7 @@ vehicles.push("lorry")
 
 
 ## Accessing and modifying arrays
+
 We can access, modify and add elements to an array using bracket notation
 
 ```javascript
@@ -126,13 +128,16 @@ fruits[1] = "melon" //modifying index 1
 console.log(fruits)
 ```
 
+
 ## Array Properties and Methods
+
 1. length property - gives total number of elements in the array
 
 ```javascript
 let fruits = ["apple", "lemon", "berries"]
 console.log(fruits.length)
 ```
+
 
 ## Array Methods
 
@@ -208,7 +213,7 @@ let allFruits = fruits.concat(tropicalFruits);
 console.log(allFruits);
 ```
 
-8. join() - joins array elements to a string
+8. join() -  takes an array of items (like strings or numbers) and combines them into one single string, using a separator that one specifies.
 
 ```javascript
 let fruits = ["Banana", "Orange", "Apple", "Mango"];
