@@ -2,8 +2,10 @@
 
 ## Processor and Execution flow
 
-The *Processor* is the heart of the computer responsible for executing the indtructions of your programs. The speed at which programs execute depend on:
+The *Processor* is the heart of the computer responsible for executing the instructions of our programs. The speed at which programs execute depend on:
+
     * Processor speed - how quickly the CPU can handle operations like instructions and calculations
+
     * Memory speed - how quickly the CPU can access data from RAM(faster than from hard disks)
 
 
@@ -13,7 +15,7 @@ The *Processor* is the heart of the computer responsible for executing the indtr
 
 **Single-threading**
 
-In a single-threaded execution, aprogram runs in a single sequence(line by line), one task at a time. This means that the processor has to wait for one task to finish before starting the next one. 
+In a single-threaded execution, a program runs in a single sequence(line by line), one task at a time. This means that the processor has to wait for one task to finish before starting the next one. 
 
 So, when doing something like a *for loop* that processes a large amount of data, the processor is dedicated to that one task until its complete.
 
@@ -95,6 +97,8 @@ readTextFile("Shopping_list.txt", content => {
 
 
 ### Callback Hell: When Callbacks become complicated
+
+*Callback hell* refers to the situation in JavaScript where multiple nested callbacks create complex, deeply nested code; "pyramid of doom".
 
 Callbacks work well for simple cases, but they can become hard to manage when we need to perform multiple asynchronous tasks in a sequence. 
 
@@ -392,7 +396,7 @@ textFile("file1.txt")
 ```
 Here, each `then()` wauts for the previous promise to resolve before moving to the next one.
 
-## How Promises Improve Upon Callbacks
+### How Promises Improve Upon Callbacks
 
 1. Cleaner syntax - Promises provide a more readable syntax for handling asynchronous code. Instead of passing callback functions, we can chain `.then()` calls that represent different stages of an operation.
 
@@ -490,7 +494,7 @@ We can think of it as:
     * A *loop* that continuously checks if the main thread is free and then executes the next task from the queue.
 
 
-**How it Works**
+### How the Event Loop Works
 
 1. **Main Script Execution**
 
@@ -513,7 +517,7 @@ The event loop constantly checks:
 If yes, it dequeues a callback from the *Task queue/callback queue* or from the *Microtask queue/Promise Queue* and pushes it onto the callstack for execution.
 
 
-**Example: Execution in a callstack**
+**Example 1: Execution in a callstack**
 
 ```javascript
 console.log("One!")
@@ -553,4 +557,282 @@ So, eventually 3 is logged, `logThree()` execution context is popped off the cal
 
 `console.log("Four!")` execution context which is in the body of `logThreeAndFour` is created, evalauated and logs Four then logThreeAndFour() gets popped off the call stack.
 
+
+**Example 2: Single-threaded problem**
+
+```javascript
+function longRunningTask(){
+    let count = 0;
+    for (let i = 0; i < 100; i++){
+        count++
+    }
+    console.log("Long running task completed!")
+}
+
+function importantTask(){
+    console.log("Important")
+}
+
+longRunningTask();
+importantTask();
+
+```
+
+Since JavaScript is single threaded, meaning it can handle a single task at a time on the main thread.
+
+In the above example, `longRunningTask` is invoked, its a heavy computation that takes a while to complete execution. Thus, the other parts of the program are frozen...they have to wait till for the longRunningTask to be completed for them to be executed. 
+
+Long running tasks include; network requests, or anything based on userInput, timers. So, we kind of would want to avoid this long running tasks, since we dont want our entire call stack to be blocked till we get data back. 
+
+So to take care of this long running tasks is where Web APIs come in. *Web APIs* provide a set of interfaces that help us interact with browser features. 
+
+We have different types of Web APIs. Below are some of them grouped according to their functionality:
+
+**1. Browser APIs**
+
+* Document Object Model (DOM) APIs - Allows manipulation of HTML   and CSS
+`document.querySelector('h1').textContent = 'Hello World!';`
+
+* Console API - For debugging purposes. 
+`console.log('Debug message');`
+
+* Storage APIs - For storing data locally.
+`localStorage.setItem('key', 'value');`
+`sessionStorage.setItem('key', 'value');`
+
+* Fetch API - For making HTTP requests.
+
+```javascript
+fetch('https://api.example.com/data')
+  .then(response => response.json())
+  .then(data => console.log(data));
+
+```
+
+**2. Server APIs**
+
+They enable communication between a client(browser) and a server
+
+* REST APIs - Use HTTP methods (GET, POST, PUT, DELETE) to interact with a server.
+
+* WebSocket API - For real-time, two-way communication with a server.
+
+```javascript
+const socket = new WebSocket('ws://example.com/socket');
+socket.onmessage = event => console.log(event.data);
+
+```
+
+**3. Device APIs**
+
+Allow web applications to interact with hardware/device-specific features
+
+* Geolocation API - For retrieving user's location
+
+```javascript
+navigator.geolocation.getCurrentPosition(
+    position => console.log(position)
+    error => console.error(error)
+)
+
+```
+
+* Camera and Microphone (MediaDevices API) - For accessing the user's camera or microphone.
+
+
+#### Callback-based API
+
+```javascript
+
+navigator.geolocation.getCurrentPosition(
+    position => console.log(position) //success callback
+    error => console.error(error) //error callback
+)
+
+```
+
+* First, the `getCurrentPosition` invokation gets added to the call stack. The success and error callbacks get registered on the Web API/browser to initiate the async task.
+So after the callbacks are registered, `getCurrentPosition` gets popped off the call stack without waiting for any data.
+Once the API receives data from the browser, it uses the success callback to handle the result. However, the callback doesnt immediately get pushed onto the call stack as it could disrupt an already running task.
+So instead, the callback gets pushed to the *task queue* which is also called the *callback queue*.
+
+`position => console.log("Position")`
+
+**The Task Queue:** It holds Web API callbacks and event handlers to be able to get executed some place in the future
+The event loop then checks if the call stack is empty, once it is, tasks in the task queue get pushed to the callstack for evaluation and execution.
+
+
+#### Promise-based API
+
+Whenever we are working with promises we are dealing with the *Microtask Queue*.
+The *Microtask queue* is a special queue dedicated to handle the following callbacks; 
+        
+    * `.then(() => {...})`
+    
+    * `.catch(() => {...})`
+    
+    * `.finally(() => {...})`
+
+    * ```javascript
+    async function asyncFunction() {
+        await ...
+        //function body execution after await
+    }
+    ```
+    * queueMicrotask(() => {...})
+
+    * new MutationObserver(() => {...})
+
+* The event loop prioritizes the *Microtask queue*, so whenever the call stack is empty, the event loop first ensures that the microtask queue is entirely empty.
+
+* So, the event loop gets the tasks from the Microtask queue, and moves them to the call stack where they get executed.
+
+* After the Microtask queue is entirely empty, only then does the event loop move to the task queue 
+
+**Example**
+
+```javascript
+fetch("http://url.com")
+    .then(res => console.log(res))
+
+    console.log("End of Script");
+
+```
+
+* So, once we call `fetch()`, its added to the callstack.
+`fetch()` is responsible for creating a promise object, which by default the *state is pending*, *result is undefined*
+`fetch()` also initializes a background network request thats handled by the browser.
+
+* In the next line `.then()`, creates a promise reaction ie. `res => console.log(res)`
+
+* As we wait for the server to respond, we move onto the next line, `console.log("End of Script");` which is moved onto the call stack and *End of Script* gets logged.
+
+* Once our promise is fulfiled, the promise result becomes the Response and the promise reaction handler ie. `res => console.log(res)` goes to the Microtask Queue.
+The event loop confirms the callstack is empty, then checks the microtask queue, and pushes the task to the callstack where it eventually logs the response from the server.
+
+
+#### Promisifying a callback API
+
+Callbacks can lead to messy, nested code; *callback hell*
+Promises, on the other hand, allow the use of `.then()` chains and `aync/await` syntax, which are cleaner and more readable.
+
+**Example 1: A callback-based function**
+
+```javascript
+function fetchData(callback) {
+    setTimeout(() => {
+        callback(null, "Data retrieved!")
+    }, 1000)
+}
+
+fetchData((err, result) => {
+    if (err) {
+        console.error("Error:", err)
+    } else {
+        console.log(result)
+    }  
+});
+    
+```
+
+**Promisifying the callback function**
+
+```javascript
+funtion fetchDataPromisified() {
+    return new Promise((resolve, reject) => {
+        fetchData((err, result) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(result)
+            }
+        })
+    })
+}
+
+fetchDataPromisified()
+    .then(result => console.log(result))
+    .catch(err => console.error("Error:", err))
+
+```
+
+**With `async/await`**
+
+```javascript
+async function getData() {
+    try {
+        const result = await fetchDataPromisified();
+        console.log(result); // Output: Data retrieved!
+    } catch (err) {
+        console.error("Error:", err);
+    }
+}
+
+getData();
+
+```
+
+
+## Asynchronous bugs
+
+When a program runs asynchronously, each line of code runs one after the other without interruptions. In an asynchronous program, certain parts of the code may pause (ie. while waiting for a file to load), allowing other code to execute in the meantime.
+
+This can lead to unexpecetd behavior if we are not careful about managing these "pauses" and how variables are updated.
+
+**Example 1: A Buggy Version**
+
+```javascript
+async function fileSizes(files) {
+    let list = "";
+    await Promise.all(files.map(async fileName => {
+        list += fileName + ": " + await textFile(fileName).length + "\n"
+    }));
+
+    return list;
+}
+```
+
+* The code goes through an array of file names `(files)`
+* Reads the content of each file asynchronously `(await textFile(fileName))`
+* Adds a line to the `list` for each file showing its name and size.
+
+The program doesnt work because:
+
+* *The asynchronous gap* - The `+=` operator modifies `list`. But since each `+=` happens asynchronously (due to `await`), the updates dont occur in a controlled sequence.
+* *Race condition* - Each part of the code accessing `list` is running independently. By the time one file finishes reading and updates `list`, another operation might have overwritten it, resulting in only the last update sticking.
+
+
+**Example 2: Solution to the buggy code**
+
+```javascript
+async function fileSizes(files) {
+    let list = files.map(async fileName => {
+        return fileName + ": " + (await textFile(fileName)).length;
+    });
+
+    return (await Promise.all(list)).join("\n")
+}
+```
+
+**The solution works because:**
+
+* Instead of modifying `list` directly during each asynchronous operation, we return the results as an array (`lines`)
+* `Promise.all(lines)` ensures all operations complete before we combine the results.
+* Each async function computes its result without depending on or modifying external variables, avoiding conflicts.
+
+**An Analogy of Asynchronous Bugs**
+
+We can think of it as multiple chefs preparing different dishes for a menu:
+
+* Buggy Version: All chefs write their dishes on the same menu sheet. If chef A starts writing, but chef B finishes first and overwrites the sheet, you only see chef B's dish on the final menu.
+
+* Fixed Version: Each chef writes their dish on separate cards. Once all the chefs finish, you collect the cards and compile them into a single menu. This way, no one overwrites anyone else's work.
+
+**Key Takeaways:**
+
+* Avoid modifying shared variables during asynchronous operations. Use separate data structures like arrays to hold results.
+
+* Understanding gaps in asynchromous code. When using `await`, remember that other code might run while waiting for the operation to finish.
+
+* Using tools like `Promise.all`, helps coordinate multiple async tasks and ensures they all complete before proceeding.
 
